@@ -1,0 +1,131 @@
+--SQL Script
+--a)
+COLUMN pName.firstName HEADING 'FIRST NAME'
+COLUMN pName.surname HEADING 'LAST NAME'
+COLUMN pAddress.city HEADING 'LIVES IN'
+COLUMN pName.title HEADING 'Title'
+SELECT e.pName.title, e.pName.firstName, e.pName.surname, e.pAddress.city
+FROM employees e
+WHERE INSTR(e.pName.firstName,'on') > 0
+AND
+e.pAddress.city = 'Edinburgh';
+/
+
+--b)
+COLUMN branch_r.bAddress.street HEADING 'Street'
+COLUMN branch_r.bAddress.city HEADING 'City'
+COLUMN branch_r.bAddress.postCode HEADING 'Post|Code'
+COLUMN COUNT(a.accNum) HEADING 'Accounts'
+SELECT a.branch_r.bAddress.street, a.branch_r.bAddress.city, a.branch_r.bAddress.postCode, COUNT(a.ACCNUM)
+FROM savAccs a 
+GROUP BY a.branch_r.bAddress.street, a.branch_r.bAddress.city, a.branch_r.bAddress.postCode;
+/
+
+--c)
+COLUMN acc_r.branch_r.bAddress.street HEADING 'Street'
+COLUMN acc_r.branch_r.bAddress.city HEADING 'City'
+COLUMN acc_r.branch_r.bAddress.postCode HEADING 'Post|Code'
+COLUMN cust_r.pName.title HEADING 'Title'
+COLUMN cust_r.pName.firstName HEADING 'First Name'
+COLUMN cust_r.pName.surname HEADING 'Surname'
+COLUMN acc_r.balance HEADING 'Balance'
+SELECT b.acc_r.branch_r.bAddress.street, b.acc_r.branch_r.bAddress.city, b.acc_r.branch_r.bAddress.postcode, a.cust_r.pName.title, a.cust_r.pName.firstName, a.cust_r.pName.surname, a.acc_r.balance 
+FROM custSavAccs a, custSavAccs b
+GROUP BY b.acc_r.branch_r.bAddress.street, b.acc_r.branch_r.bAddress.city, b.acc_r.branch_r.bAddress.postcode, a.cust_r.pName.title, a.cust_r.pName.firstName, a.cust_r.pName.surname, a.acc_r.balance
+HAVING MAX(b.acc_r.balance)=a.acc_r.balance;
+/
+
+--d)
+COLUMN branch_r.bAddress.street HEADING 'Street'
+COLUMN branch_r.bAddress.city HEADING 'City'
+COLUMN branch_r.bAddress.postCode HEADING 'Post|Code'
+SELECT c.cust_r.pName.firstName, c.cust_r.pName.title, c.cust_r.pName.surname, c.acc_r.branch_r.bAddress.street, c.acc_r.branch_r.bAddress.city, c.acc_r.branch_r.bAddress.postcode, e.branch_r.bAddress.street, e.branch_r.bAddress.city, e.branch_r.bAddress.postcode
+FROM CUSTCURACCS c, employees e
+WHERE c.cust_r.niNum = e.niNum
+AND e.supervisor_r IS NOT NULL;
+/
+
+--e)
+COLUMN acc_r.branch_r.bID HEADING 'Branch ID'
+COLUMN acc_r.limitOfFreeOD HEADING 'Free OD Limit'
+SELECT b.acc_r.branch_r.bID, a.cust_r.pName.title, a.cust_r.pName.firstName, a.cust_r.pName.surname, a.acc_r.limitOfFreeOD
+FROM custCurAccs a, custCurAccs b
+GROUP BY b.acc_r.branch_r.bID, a.cust_r.pName.title, a.cust_r.pName.firstName, a.cust_r.pName.surname, a.acc_r.limitOfFreeOD
+HAVING MAX(b.acc_r.limitOfFreeOD)=a.acc_r.limitOfFreeOD;
+/
+
+--f)
+COLUMN area_code HEADING 'Area|Code'
+COLUMN local_number HEADING 'Local|Number'
+SELECT c.pName.firstName, c.pName.surname, t.*
+FROM customers c, table(c.pPhone) t
+WHERE t.area_code like '0770'
+AND
+(SELECT COUNT(t.area_code) 
+FROM customers c, table(c.pPhone) t) > 0;
+/
+
+--g)
+COLUMN COUNT(*) HEADING 'Employees'
+SELECT COUNT(*)
+FROM employees e
+WHERE e.supervisor_r.pName.title = 'Mrs.'
+AND e.supervisor_r.pName.surname = 'Smith'
+AND e.supervisor_r.supervisor_r.pName.title = 'Mr.'
+AND e.supervisor_r.supervisor_r.pName.surname = 'Jones';
+
+--Ouputs(answers)
+--a)
+Titl FIRST NAME           LAST NAME            LIVES IN           
+---- -------------------- -------------------- --------------------
+Mr.  Jon                  Jones                Edinburgh           
+Mr.  Bono                 Bono                 Edinburgh           
+Mr.  Elrond               Rivendell            Edinburgh      
+
+--b)
+                                          Post                                            
+Street               City                 Code                                    Accounts
+-------------------- -------------------- -------- ---------------------------------------
+23 Dirkiston         Jedinburgh           JD5 9PC                                        4
+24 Dirkiston         Jedinburgh           JD6 9PC                                        4
+21 Dirkiston         Jedinburgh           JD3 9PC                                        4
+22 Dirkiston         Jedinburgh           JD4 9PC                                        4
+10 Merchiston        Edinburgh            EH3 9AD                                        4
+
+--c)
+                                          Post                                                                                           
+Street               City                 Code     Titl First Name           Surname                                              Balance
+-------------------- -------------------- -------- ---- -------------------- -------------------- ---------------------------------------
+24 Dirkiston         Jedinburgh           JD6 9PC  Ms.  Galadriel            Goldenwood                                              1564
+21 Dirkiston         Jedinburgh           JD3 9PC  Mr.  Peregrin             Took                                                   15616
+10 Merchiston        Edinburgh            EH3 9AD  Mr.  Frodo                Baggins                                                15620
+22 Dirkiston         Jedinburgh           JD4 9PC  Mr.  Boromir              Denethorson                                            15612
+23 Dirkiston         Jedinburgh           JD5 9PC  Mr.  Tom                  Bombadil                                                1568
+
+--d)
+                                                                                         Post                                               Post   
+First Name           Titl Surname              Street               City                 Code     Street               City                 Code   
+-------------------- ---- -------------------- -------------------- -------------------- -------- -------------------- -------------------- --------
+Bono                 Mr.  Bono                 24 Dirkiston         Jedinburgh           JD6 9PC  10 Merchiston        Edinburgh            EH3 9AD
+ 
+--e)
+Branch ID            Titl First Name           Surname                                        Free OD Limit
+-------------------- ---- -------------------- -------------------- ---------------------------------------
+3                    Ms.  Arwen                Evenstar                                                1600
+4                    Mr.  Bono                 Bono                                                    2100
+0                    Mr.  Meriadoc             Brandybuck                                               400
+1                    Mr.  Gimli                Gloinson                                                 800
+2                    Mr.  Bilbo                Baggins                                                 1200
+
+--f)
+                                          Area Local 
+FIRST NAME           LAST NAME            Code Number
+-------------------- -------------------- ---- -------
+Samwise              Gamgee               0770 1234567
+Meriadoc             Brandybuck           0770 1234567
+
+--g)
+ Employees
+----------
+         2
+

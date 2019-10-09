@@ -1,0 +1,276 @@
+CREATE TYPE Name AS OBJECT (
+	title varchar2(4),
+	firstName varchar2(20),
+	surname varchar2(20));
+/
+
+CREATE TYPE Address AS OBJECT (
+	street varchar2(20),
+	city varchar2(20),
+	postCode varchar2(8));
+/
+
+CREATE TYPE tPhone AS OBJECT (
+	area_code varchar(4),
+	local_number varchar(7)
+);
+/
+	
+CREATE TYPE phone_table AS TABLE OF tPhone;
+/
+
+CREATE TYPE Branch AS OBJECT (
+	bID varchar2(20),
+	bPhone phone_table,
+	bAddress Address
+);
+/
+
+CREATE TYPE Person AS OBJECT (
+	pName Name,
+	pAddress Address,
+	pPhone phone_table,
+	niNum varchar2(20)
+) 	not final;
+/
+
+CREATE TYPE Customer UNDER Person (
+	custID varchar2(20)
+)	final;
+/
+
+CREATE TYPE Employee UNDER Person (
+	empID varchar2(20),
+	position varchar2(20),
+	salary int,
+	joinDate DATE,
+	branch_r ref Branch,
+	supervisor_r ref Employee
+) final;
+/
+
+CREATE TYPE Account AS OBJECT (
+	accNum varchar2(10),
+	balance int,
+	inRate varchar2(5),
+	openDate DATE
+)	not final;
+/
+
+CREATE TYPE CurrentAcc UNDER Account (
+	limitOfFreeOd int,
+	branch_r ref Branch
+)	final;
+/
+
+CREATE TYPE SavingsAcc UNDER Account (branch_r ref Branch) final;
+/
+
+CREATE TABLE branches of Branch(
+	bID PRIMARY KEY
+)	nested table bPhone store as bPhone_table;
+/
+
+CREATE TABLE customers OF Customer(
+	custID PRIMARY KEY
+)	nested table pPhone store as cPhone_table;
+/
+CREATE TABLE employees OF Employee(
+	empID PRIMARY KEY
+)	nested table pPhone store as ePhone_table;
+/
+
+CREATE TABLE curAccs of CurrentAcc(
+	accNum PRIMARY KEY
+);
+/
+CREATE TABLE savAccs of SavingsAcc(
+	accNum PRIMARY KEY
+);
+/
+CREATE TABLE custSavAccs(
+	cust_r ref Customer SCOPE IS customers,
+	acc_r ref SavingsAcc SCOPE IS savAccs
+);
+/
+CREATE TABLE custCurAccs(
+	cust_r ref Customer SCOPE IS customers,
+	acc_r ref CurrentAcc SCOPE IS curAccs
+);
+
+
+-- Insert statements for branches, bID, bphone_table, bAddress
+INSERT INTO branches VALUES ('0', phone_table(tPhone('0131','6636098')), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'));
+INSERT INTO branches VALUES ('1', phone_table(tPhone('0131','0020002')), Address('21 Dirkiston', 'Jedinburgh', 'JD3 9PC'));
+INSERT INTO branches VALUES ('2', phone_table(tPhone('0131','0020002')), Address('22 Dirkiston', 'Jedinburgh', 'JD4 9PC'));
+INSERT INTO branches VALUES ('3', phone_table(tPhone('0131','0020002')), Address('23 Dirkiston', 'Jedinburgh', 'JD5 9PC'));
+INSERT INTO branches VALUES ('4', phone_table(tPhone('0131','0020002')), Address('24 Dirkiston', 'Jedinburgh', 'JD6 9PC'));
+INSERT INTO branches VALUES ('5', phone_table(tPhone('0131','6636098')), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'));
+INSERT INTO branches VALUES ('6', phone_table(tPhone('0131','0020002')), Address('21 Dirkiston', 'Jedinburgh', 'JD3 9PC'));
+INSERT INTO branches VALUES ('7', phone_table(tPhone('0131','0020002')), Address('22 Dirkiston', 'Jedinburgh', 'JD4 9PC'));
+INSERT INTO branches VALUES ('8', phone_table(tPhone('0131','0020002')), Address('23 Dirkiston', 'Jedinburgh', 'JD5 9PC'));
+INSERT INTO branches VALUES ('9', phone_table(tPhone('0131','0020002')), Address('24 Dirkiston', 'Jedinburgh', 'JD6 9PC'));
+INSERT INTO branches VALUES ('10', phone_table(tPhone('0131','6636098')), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'));
+INSERT INTO branches VALUES ('11', phone_table(tPhone('0131','0020002')), Address('21 Dirkiston', 'Jedinburgh', 'JD3 9PC'));
+INSERT INTO branches VALUES ('12', phone_table(tPhone('0131','0020002')), Address('22 Dirkiston', 'Jedinburgh', 'JD4 9PC'));
+INSERT INTO branches VALUES ('13', phone_table(tPhone('0131','0020002')), Address('23 Dirkiston', 'Jedinburgh', 'JD5 9PC'));
+INSERT INTO branches VALUES ('14', phone_table(tPhone('0131','0020002')), Address('24 Dirkiston', 'Jedinburgh', 'JD6 9PC'));
+INSERT INTO branches VALUES ('15', phone_table(tPhone('0131','6636098')), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'));
+INSERT INTO branches VALUES ('16', phone_table(tPhone('0131','0020002')), Address('21 Dirkiston', 'Jedinburgh', 'JD3 9PC'));
+INSERT INTO branches VALUES ('17', phone_table(tPhone('0131','0020002')), Address('22 Dirkiston', 'Jedinburgh', 'JD4 9PC'));
+INSERT INTO branches VALUES ('18', phone_table(tPhone('0131','0020002')), Address('23 Dirkiston', 'Jedinburgh', 'JD5 9PC'));
+INSERT INTO branches VALUES ('19', phone_table(tPhone('0131','0020002')), Address('24 Dirkiston', 'Jedinburgh', 'JD6 9PC'));
+
+-- Insert statements for customers, Name, Address, phone_table, NI, custID
+INSERT INTO customers VALUES (Name('Mr.', 'Frodo', 'Baggins'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '0');
+INSERT INTO customers VALUES (Name('Mr.', 'Gandalf', 'the Grey'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0472','5836901'), tPhone('0701','4725836'), tPhone('0759','8745632')), 'BJX1236ASDASD', '1');
+INSERT INTO customers VALUES (Name('Mr.', 'Samwise', 'Gamgee'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0472','5836901'), tPhone('0770','1234567'), tPhone('0472','5836901')), 'BJX1236ASDASD', '2');
+INSERT INTO customers VALUES (Name('Mr.', 'Meriadoc', 'Brandybuck'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0770','1234567'), tPhone('0472','5836901'), tPhone('0472','5836901')), 'BJX1236ASDASD', '3');
+INSERT INTO customers VALUES (Name('Mr.', 'Peregrin', 'Took'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '4');
+INSERT INTO customers VALUES (Name('Mr.', 'Aragorn', 'Strider'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '5');
+INSERT INTO customers VALUES (Name('Mr.', 'Legolas', 'Thranduilson'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '6');
+INSERT INTO customers VALUES (Name('Mr.', 'Gimli', 'Gloinson'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '7');
+INSERT INTO customers VALUES (Name('Mr.', 'Boromir', 'Denethorson'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '8');
+INSERT INTO customers VALUES (Name('Mr.', 'Sauron', 'Dark Lord'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '9');
+INSERT INTO customers VALUES (Name('Mr.', 'Gollum', 'Smeagol'), Address('20 Dirkiston', 'Jedinburgh', 'JD3 9PC'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '10');
+INSERT INTO customers VALUES (Name('Mr.', 'Bilbo', 'Baggins'), Address('20 Dirkiston', 'Jedinburgh', 'JD3 9PC'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '11');
+INSERT INTO customers VALUES (Name('Mr.', 'Tom', 'Bombadil'), Address('20 Dirkiston', 'Jedinburgh', 'JD3 9PC'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '12');
+INSERT INTO customers VALUES (Name('Mr.', 'Glorfindel', 'Rivendell'), Address('20 Dirkiston', 'Jedinburgh', 'JD3 9PC'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '13');
+INSERT INTO customers VALUES (Name('Mr.', 'Elrond', 'Rivendell'), Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '14');
+INSERT INTO customers VALUES (Name('Ms.', 'Arwen', 'Evenstar'), Address('20 Dirkiston', 'Jedinburgh', 'JD3 9PC'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '15');
+INSERT INTO customers VALUES (Name('Ms.', 'Galadriel', 'Goldenwood'), Address('20 Dirkiston', 'Jedinburgh', 'JD3 9PC'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '16');
+INSERT INTO customers VALUES (Name('Mr.', 'Saruman', 'the White'), Address('20 Dirkiston', 'Jedinburgh', 'JD3 9PC'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '17');
+INSERT INTO customers VALUES (Name('Mr.', 'Eomer', 'Eomund'), Address('20 Dirkiston', 'Jedinburgh', 'JD3 9PC'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), 'BJX1236ASDASD', '18');
+INSERT INTO customers VALUES (Name('Mr.', 'Bono', 'Bono'), Address('20 Dirkiston', 'Jedinburgh', 'JD3 9PC'), phone_table(tPhone('0123','4567899'), tPhone('0754','0422123'), tPhone('0777','9257706')), '00002', '19');
+
+-- Insert statements for employees, Name, Address, phone_table, NI, empID, position, salary, joinDate
+INSERT INTO employees SELECT Name('Mr.', 'Jon', 'Jones'),  Address('10 Merchiston', 'Edinburgh', 'EH3 9AD'),  phone_table(tPhone('0000','0000000'), tPhone('0000','0000000'), tPhone('0000','0000000')), '00000', '0', 'Head', '2345600', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), null FROM branches b WHERE b.bID = '0';
+INSERT INTO employees SELECT Name('Mrs.', 'Siobhan', 'Smith'), Address('11 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0000','0000001'), tPhone('0000','0000001'), tPhone('0000','0000001')), '00001', '1', 'Manager', '234560', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '0' AND e.empID = 0;
+INSERT INTO employees SELECT Name('Mr.', 'Bono', 'Bono'),  Address('12 Merchiston', 'Edinburgh', 'EH3 9AD'),  phone_table(tPhone('0000','0000002'), tPhone('0000','0000002'), tPhone('0000','0000002')), '00002', '2', 'Cashier', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '0' AND e.empID = '1';
+INSERT INTO employees SELECT Name('Mr.', 'Elrond', 'Rivendell'), Address('13 Merchiston', 'Edinburgh', 'EH3 9AD'), phone_table(tPhone('0000','0000003'), tPhone('0000','0000003'), tPhone('0000','0000003')), '00003', '3', 'Cashier', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '0' AND e.empID = '1';
+INSERT INTO employees SELECT Name('Mr.', 'Donald', 'Trump'),  Address('14 Merchiston', 'Glasgow', 'GH3 9AD'),  phone_table(tPhone('0000','0000004'), tPhone('0000','0000004'), tPhone('9876','5432109')), '00004', '4', 'Head', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), null FROM branches b WHERE b.bID = '1';
+INSERT INTO employees SELECT Name('Mr.', 'Elvis', 'Presley'), Address('15 Merchiston', 'Glasgow', 'GH3 9AD'), phone_table(tPhone('0000','0000005'), tPhone('0000','0000005'), tPhone('0000','0000001')), '00005', '5', 'Manager', '234560', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '1' AND e.empID = '4';
+INSERT INTO employees SELECT Name('Mrs.', 'Oprah', 'Winfrey'),  Address('16 Merchiston', 'Glasgow', 'GH3 9AD'),  phone_table(tPhone('0000','0000006'), tPhone('0000','0000006'), tPhone('9876','5432109')), '00006', '6', 'Cashier', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '1' AND e.empID = '5';
+INSERT INTO employees SELECT Name('Mr.', 'Abraham', 'Lincoln'), Address('17 Merchiston', 'Glasgow', 'GH3 9AD'), phone_table(tPhone('0770','0000007'), tPhone('0000','0000007'), tPhone('0000','0000001')), '00007', '7', 'Cashier', '234560', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '1' AND e.empID = '5';
+INSERT INTO employees SELECT Name('Mr.', 'Barack', 'Obama'),  Address('18 Merchiston', 'Glasgow', 'GH3 9AD'),  phone_table(tPhone('0770','0000008'), tPhone('0770','0000008'), tPhone('9876','5432109')), '00008', '8', 'Head', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), null FROM branches b WHERE b.bID = '2';
+INSERT INTO employees SELECT Name('Mr.', 'David', 'Beckham'), Address('19 Merchiston', 'Glasgow', 'GH3 9AD'), phone_table(tPhone('0000','0000009'), tPhone('0000','0000009'), tPhone('0000','0000001')), '00009', '9', 'Manager', '234560', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '2' AND e.empID = '8';
+INSERT INTO employees SELECT Name('Mr.', 'John', 'Kennedy'),  Address('1 Merchiston', 'Glasgow', 'GH3 9AD'),  phone_table(tPhone('1000','0000000'), tPhone('1000','0000000'), tPhone('9876','5432109')), '00010', '10', 'Cashier', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '2' AND e.empID = '9';
+INSERT INTO employees SELECT Name('Mrs.', 'Marilyn', 'Monroe'), Address('2 Merchiston', 'Glasgow', 'GH3 9AD'), phone_table(tPhone('0000','0000010'), tPhone('0000','0000010'), tPhone('0000','0000001')), '00011', '11', 'Cashier', '234560', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '2' AND e.empID = '9';
+INSERT INTO employees SELECT Name('Mr.', 'Steven', 'Spielberg'),  Address('3 Merchiston', 'Glasgow', 'GH3 9AD'),  phone_table(tPhone('0000','0000011'), tPhone('0000','0000011'), tPhone('9876','5432109')), '00012', '12', 'Head', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), null FROM branches b WHERE b.bID = '3';
+INSERT INTO employees SELECT Name('Mr.', 'Alfred', 'Hitchcock'), Address('4 Merchiston', 'Glasgow', 'GH3 9AD'), phone_table(tPhone('0000','0000101'), tPhone('0000','0000101'), tPhone('0000','0000001')), '00013', '13', 'Manager', '234560', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '3' AND e.empID = '12';
+INSERT INTO employees SELECT Name('Mr.', 'George', 'Clooney'),  Address('5 Merchiston', 'Glasgow', 'GH3 9AD'),  phone_table(tPhone('0000','0000012'), tPhone('0000','0000012'), tPhone('9876','5432109')), '00014', '14', 'Cashier', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '3' AND e.empID = '13';
+INSERT INTO employees SELECT Name('Mrs.', 'Britney', 'Spears'), Address('6 Merchiston', 'Glasgow', 'GH3 9AD'), phone_table(tPhone('0000','0001001'), tPhone('0000','0001001'), tPhone('0000','0000001')), '00015', '15', 'Cashier', '234560', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '3' AND e.empID = '13';
+INSERT INTO employees SELECT Name('Mrs.', 'Elizabeth', 'Taylor'),  Address('7 Merchiston', 'Glasgow', 'GH3 9AD'),  phone_table(tPhone('0000','0000013'), tPhone('0000','0000013'), tPhone('9876','5432109')), '00016', '16', 'Head', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), null FROM branches b WHERE b.bID = '4';
+INSERT INTO employees SELECT Name('Mrs.', 'Helenda', 'Carter'), Address('8 Merchiston', 'Glasgow', 'GH3 9AD'), phone_table(tPhone('0000','1000001'), tPhone('0000','1000001'), tPhone('0000','0000001')), '00017', '17', 'Manager', '234560', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '4' AND e.empID = '16';
+INSERT INTO employees SELECT Name('Mr.', 'Simon', 'Cowell'),  Address('9 Merchiston', 'Glasgow', 'GH3 9AD'),  phone_table(tPhone('0000','0000014'), tPhone('0000','0000014'), tPhone('9876','5432109')), '00019', '18', 'Cashier', '23456', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '4' AND e.empID = '17';
+INSERT INTO employees SELECT Name('Mr.', 'Elton', 'John'), Address('20 Merchiston', 'Glasgow', 'GH3 9AD'), phone_table(tPhone('0000','2000001'), tPhone('0000','0200001'), tPhone('0000','0000001')), '00019', '19', 'Cashier', '234560', to_date('1993/01/01', 'YYYY/MM/DD'), ref(b), ref(e) FROM branches b, employees e WHERE b.bID = '4' AND e.empID = '17';
+
+-- Insert statements for current accounts
+INSERT INTO curAccs SELECT '0', 1561, '24', to_date('2008/11/12', 'YYYY/MM/DD'), 100, ref(b) FROM branches b WHERE b.bID = '0';
+INSERT INTO curAccs SELECT '1', 1562, '23', to_date('2008/11/12', 'YYYY/MM/DD'), 200, ref(b) FROM branches b WHERE b.bID = '0';
+INSERT INTO curAccs SELECT '2', 1563, '22', to_date('2008/11/12', 'YYYY/MM/DD'), 300, ref(b) FROM branches b WHERE b.bID = '0';
+INSERT INTO curAccs SELECT '3', 1564, '21', to_date('2008/11/12', 'YYYY/MM/DD'), 400, ref(b) FROM branches b WHERE b.bID = '0';
+INSERT INTO curAccs SELECT '4', 1565, '20', to_date('2008/11/12', 'YYYY/MM/DD'), 500, ref(b) FROM branches b WHERE b.bID = '1';
+INSERT INTO curAccs SELECT '5', 1566, '19', to_date('2008/11/12', 'YYYY/MM/DD'), 600, ref(b) FROM branches b WHERE b.bID = '1';
+INSERT INTO curAccs SELECT '6', 1567, '18', to_date('2008/11/12', 'YYYY/MM/DD'), 700, ref(b) FROM branches b WHERE b.bID = '1';
+INSERT INTO curAccs SELECT '7', 1568, '17', to_date('2008/11/12', 'YYYY/MM/DD'), 800, ref(b) FROM branches b WHERE b.bID = '1';
+INSERT INTO curAccs SELECT '8', 1569, '16', to_date('2008/11/12', 'YYYY/MM/DD'), 900, ref(b) FROM branches b WHERE b.bID = '2';
+INSERT INTO curAccs SELECT '9', 15610, '15', to_date('2008/11/12', 'YYYY/MM/DD'), 1000, ref(b) FROM branches b WHERE b.bID = '2';
+INSERT INTO curAccs SELECT '10', 15611, '14', to_date('2008/11/12', 'YYYY/MM/DD'), 1100, ref(b) FROM branches b WHERE b.bID = '2';
+INSERT INTO curAccs SELECT '11', 15612, '13', to_date('2008/11/12', 'YYYY/MM/DD'), 1200, ref(b) FROM branches b WHERE b.bID = '2';
+INSERT INTO curAccs SELECT '12', 15613, '12', to_date('2008/11/12', 'YYYY/MM/DD'), 1300, ref(b) FROM branches b WHERE b.bID = '3';
+INSERT INTO curAccs SELECT '13', 15614, '11', to_date('2008/11/12', 'YYYY/MM/DD'), 1400, ref(b) FROM branches b WHERE b.bID = '3';
+INSERT INTO curAccs SELECT '14', 15615, '10', to_date('2008/11/12', 'YYYY/MM/DD'), 1500, ref(b) FROM branches b WHERE b.bID = '3';
+INSERT INTO curAccs SELECT '15', 15616, '9', to_date('2008/11/12', 'YYYY/MM/DD'), 1600, ref(b) FROM branches b WHERE b.bID = '3';
+INSERT INTO curAccs SELECT '16', 15617, '8', to_date('2008/11/12', 'YYYY/MM/DD'), 1700, ref(b) FROM branches b WHERE b.bID = '4';
+INSERT INTO curAccs SELECT '17', 15618, '7', to_date('2008/11/12', 'YYYY/MM/DD'), 1800, ref(b) FROM branches b WHERE b.bID = '4';
+INSERT INTO curAccs SELECT '18', 15619, '6', to_date('2008/11/12', 'YYYY/MM/DD'), 1900, ref(b) FROM branches b WHERE b.bID = '4';
+INSERT INTO curAccs SELECT '19', 15620, '5', to_date('2008/11/12', 'YYYY/MM/DD'), 2100, ref(b) FROM branches b WHERE b.bID = '4';
+
+-- Insert statements for savings accounts
+INSERT INTO savAccs SELECT '0', 15620, '1', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '0';
+INSERT INTO savAccs SELECT '1', 15619, '11', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '0';
+INSERT INTO savAccs SELECT '2', 15618, '12', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '0';
+INSERT INTO savAccs SELECT '3', 15617, '13', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '0';
+INSERT INTO savAccs SELECT '4', 15616, '14', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '1';
+INSERT INTO savAccs SELECT '5', 15615, '15', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '1';
+INSERT INTO savAccs SELECT '6', 15614, '16', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '1';
+INSERT INTO savAccs SELECT '7', 15613, '17', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '1';
+INSERT INTO savAccs SELECT '8', 15612, '18', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '2';
+INSERT INTO savAccs SELECT '9', 15611, '19', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '2';
+INSERT INTO savAccs SELECT '10', 15610, '0', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '2';
+INSERT INTO savAccs SELECT '11', 1569, '172', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '2';
+INSERT INTO savAccs SELECT '12', 1568, '171', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '3';
+INSERT INTO savAccs SELECT '13', 1567, '173', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '3';
+INSERT INTO savAccs SELECT '14', 1566, '174', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '3';
+INSERT INTO savAccs SELECT '15', 1565, '175', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '3';
+INSERT INTO savAccs SELECT '16', 1564, '176', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '4';
+INSERT INTO savAccs SELECT '17', 1563, '177', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '4';
+INSERT INTO savAccs SELECT '18', 1562, '178', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '4';
+INSERT INTO savAccs SELECT '19', 1561, '179', to_date('2008/11/12', 'YYYY/MM/DD'), ref(b) FROM branches b WHERE b.bID = '4';
+
+
+-- Insert statements for savings account link table, custID, accNum
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 0 AND a.accNum = 0;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 1 AND a.accNum = 1;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 2 AND a.accNum = 2;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 3 AND a.accNum = 3;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 4 AND a.accNum = 4;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 5 AND a.accNum = 5;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 6 AND a.accNum = 6;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 7 AND a.accNum = 7;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 8 AND a.accNum = 8;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 9 AND a.accNum = 9;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 10 AND a.accNum = 10;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 11 AND a.accNum = 11;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 12 AND a.accNum = 12;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 13 AND a.accNum = 13;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 14 AND a.accNum = 14;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 15 AND a.accNum = 15;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 16 AND a.accNum = 16;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 17 AND a.accNum = 17;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 18 AND a.accNum = 18;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 19 AND a.accNum = 19;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 0 AND a.accNum = 0;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 10 AND a.accNum = 1;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 2 AND a.accNum = 2;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 3 AND a.accNum = 3;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 4 AND a.accNum = 4;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 5 AND a.accNum = 5;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 6 AND a.accNum = 6;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 7 AND a.accNum = 7;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 8 AND a.accNum = 8;
+INSERT INTO custSavAccs SELECT ref(c), ref(a) FROM customers c, savAccs a WHERE c.custID = 9 AND a.accNum = 9;
+
+
+-- Insert statements for current account link tables
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 0 AND a.accNum = 0;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 1 AND a.accNum = 1;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 2 AND a.accNum = 2;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 3 AND a.accNum = 3;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 4 AND a.accNum = 4;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 5 AND a.accNum = 5;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 6 AND a.accNum = 6;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 7 AND a.accNum = 7;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 8 AND a.accNum = 8;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 9 AND a.accNum = 9;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 10 AND a.accNum = 10;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 11 AND a.accNum = 11;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 12 AND a.accNum = 12;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 13 AND a.accNum = 13;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 14 AND a.accNum = 14;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 15 AND a.accNum = 15;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 16 AND a.accNum = 16;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 17 AND a.accNum = 17;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 18 AND a.accNum = 18;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 19 AND a.accNum = 19;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 0 AND a.accNum = 0;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 10 AND a.accNum = 1;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 2 AND a.accNum = 2;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 3 AND a.accNum = 3;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 4 AND a.accNum = 4;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 5 AND a.accNum = 5;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 6 AND a.accNum = 6;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 7 AND a.accNum = 7;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 8 AND a.accNum = 8;
+INSERT INTO custCurAccs SELECT ref(c), ref(a) FROM customers c, curAccs a WHERE c.custID = 9 AND a.accNum = 9;

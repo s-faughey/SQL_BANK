@@ -1,0 +1,22 @@
+-- Drop commands to make sure types tables are free
+
+DROP TYPE Name FORCE;
+DROP TYPE Address FORCE;
+DROP TYPE Branch FORCE;
+DROP TYPE Person FORCE;
+DROP TYPE Customer FORCE;
+DROP TYPE Employee FORCE;
+DROP TYPE Account FORCE;
+DROP TYPE CurrentAcc FORCE;
+DROP TYPE SavingsAcc FORCE;
+DROP TYPE phone_table FORCE;
+DROP TYPE tPhone FORCE;
+
+
+DROP TABLE employees;
+DROP TABLE curAccs;
+DROP TABLE savAccs;
+DROP TABLE customers;
+DROP TABLE branches;
+DROP TABLE custSavAccs;
+DROP TABLE custCurAccs;

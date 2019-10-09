@@ -1,0 +1,212 @@
+branches																		
+bID	area_number	local_number	street	city	post_code													
+0	0131	6636098	10 Merchiston	Edinburgh	EH3 9AD													
+1	0131	0020002	21 Dirkiston	Jedinburgh	JD3 9PC													
+2	0131	0020002	22 Dirkiston	Jedinburgh	JD4 9PC													
+3	0131	0020002	23 Dirkiston	Jedinburgh	JD5 9PC													
+4	0131	0020002	24 Dirkiston	Jedinburgh	JD6 9PC													
+5	0131	6636098	10 Merchiston	Edinburgh	EH3 9AD													
+6	0131	0020002	21 Dirkiston	Jedinburgh	JD3 9PC													
+7	0131	0020002	22 Dirkiston	Jedinburgh	JD4 9PC													
+8	0131	0020002	23 Dirkiston	Jedinburgh	JD5 9PC													
+9	0131	0020002	24 Dirkiston	Jedinburgh	JD6 9PC													
+10	0131	6636098	10 Merchiston	Edinburgh	EH3 9AD													
+11	0131	0020002	21 Dirkiston	Jedinburgh	JD3 9PC													
+12	0131	0020002	22 Dirkiston	Jedinburgh	JD4 9PC													
+13	0131	0020002	23 Dirkiston	Jedinburgh	JD5 9PC													
+14	0131	0020002	24 Dirkiston	Jedinburgh	JD6 9PC													
+15	0131	6636098	10 Merchiston	Edinburgh	EH3 9AD													
+16	0131	0020002	21 Dirkiston	Jedinburgh	JD3 9PC													
+17	0131	0020002	22 Dirkiston	Jedinburgh	JD4 9PC													
+18	0131	0020002	23 Dirkiston	Jedinburgh	JD5 9PC													
+19	0131	0020002	24 Dirkiston	Jedinburgh	JD6 9PC													
+																		
+customers																		
+title	firstName	surname	street	city	postcode	area_code	local_number	area_code2	local_number2	area_code3	local_number3	niNum						
+Mr.	Frodo	Baggins	10 Merchiston	Edinburgh	EH3 9AD	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Gandalf	the Grey	10 Merchiston	Edinburgh	EH3 9AD	0472	5836901	0701	4725836	0759	8745632	BJX1236ASDASD						
+Mr.	Samwise	Gamgee	10 Merchiston	Edinburgh	EH3 9AD	0472	5836901	0770	1234567	0472	5836901	BJX1236ASDASD						
+Mr.	Meriadoc	Brandybuck	10 Merchiston	Edinburgh	EH3 9AD	0770	1234567	0472	5836901	0472	5836901	BJX1236ASDASD						
+Mr.	Peregrin	Took	10 Merchiston	Edinburgh	EH3 9AD	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Aragorn	Strider	10 Merchiston	Edinburgh	EH3 9AD	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Legolas	Thranduilson	10 Merchiston	Edinburgh	EH3 9AD	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Gimli	Gloinson	10 Merchiston	Edinburgh	EH3 9AD	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Boromir	Denethorson	10 Merchiston	Edinburgh	EH3 9AD	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Sauron	Dark Lord	10 Merchiston	Edinburgh	EH3 9AD	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Gollum	Smeagol	20 Dirkiston	Jedinburgh	JD3 9PC	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Bilbo	Baggins	20 Dirkiston	Jedinburgh	JD3 9PC	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Tom	Bombadil	20 Dirkiston	Jedinburgh	JD3 9PC	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Glorfindel	Rivendell	20 Dirkiston	Jedinburgh	JD3 9PC	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Elrond	Rivendell	10 Merchiston	Edinburgh	EH3 9AD	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Ms.	Arwen	Evenstar	20 Dirkiston	Jedinburgh	JD3 9PC	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Ms.	Galadriel	Goldenwood	20 Dirkiston	Jedinburgh	JD3 9PC	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Saruman	the White	20 Dirkiston	Jedinburgh	JD3 9PC	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Eomer	Eomund	20 Dirkiston	Jedinburgh	JD3 9PC	0123	4567899	0754	0422123	0777	9257706	BJX1236ASDASD						
+Mr.	Bono	Bono	20 Dirkiston	Jedinburgh	JD3 9PC	0123	4567899	0754	0422123	0777	9257706	00002						
+																		
+employees																		
+title	firstName	surname	street	city	post_code	area_code	local_number	area_code2	local_number2	area_code3	local_number3	niNum	empID	position	salary	joinDate	supervisor_r	branch_r
+Mr.	Jon	Jones	10 Merchiston	Edinburgh	EH3 9AD	0000	0000000	0000	0000000	0000	0000000	00000	0	Head	2345600	01/01/1993		0
+Mrs.	Siobhan	Smith	11 Merchiston	Edinburgh	EH3 9AD	0000	0000001	0000	0000001	0000	0000001	00001	1	Manager	234560	01/01/1993	0	0
+Mr.	Bono	Bono	12 Merchiston	Edinburgh	EH3 9AD	0000	0000002	0000	0000002	0000	0000002	00002	2	Cashier	23456	01/01/1993	1	0
+Mr.	Elrond	Rivendell	13 Merchiston	Edinburgh	EH3 9AD	0000	0000003	0000	0000003	0000	0000003	00003	3	Cashier	23456	01/01/1993	1	0
+Mr.	Donald	Trump	14 Merchiston	Glasgow	GH3 9AD	0000	0000004	0000	0000004	9876	5432109	00004	4	Head	23456	01/01/1993		1
+Mr.	Elvis	Presley	15 Merchiston	Glasgow	GH3 9AD	0000	0000005	0000	0000005	0000	0000001	00005	5	Manager	234560	01/01/1993	4	1
+Mrs.	Oprah	Winfrey	16 Merchiston	Glasgow	GH3 9AD	0000	0000006	0000	0000006	9876	5432109	00006	6	Cashier	23456	01/01/1993	5	1
+Mr.	Abraham	Lincoln	17 Merchiston	Glasgow	GH3 9AD	0770	0000007	0000	0000007	0000	0000001	00007	7	Cashier	234560	01/01/1993	5	1
+Mr.	Barack	Obama	18 Merchiston	Glasgow	GH3 9AD	0770	0000008	0770	0000008	9876	5432109	00008	8	Head	23456	01/01/1993		2
+Mr.	David	Beckham	19 Merchiston	Glasgow	GH3 9AD	0000	0000009	0000	0000009	0000	0000001	00009	9	Manager	234560	01/01/1993	8	2
+Mr.	John	Kennedy	1 Merchiston	Glasgow	GH3 9AD	1000	0000000	1000	0000000	9876	5432109	00010	10	Cashier	23456	01/01/1993	9	2
+Mrs.	Marilyn	Monroe	2 Merchiston	Glasgow	GH3 9AD	0000	0000010	0000	0000010	0000	0000001	00011	11	Cashier	234560	01/01/1993	9	2
+Mr.	Steven	Spielberg	3 Merchiston	Glasgow	GH3 9AD	0000	0000011	0000	0000011	9876	5432109	00012	12	Head	23456	01/01/1993		3
+Mr.	Alfred	Hitchcock	4 Merchiston	Glasgow	GH3 9AD	0000	0000101	0000	0000101	0000	0000001	00013	13	Manager	234560	01/01/1993	12	3
+Mr.	George	Clooney	5 Merchiston	Glasgow	GH3 9AD	0000	0000012	0000	0000012	9876	5432109	00014	14	Cashier	23456	01/01/1993	13	3
+Mrs.	Britney	Spears	6 Merchiston	Glasgow	GH3 9AD	0000	0001001	0000	0001001	0000	0000001	00015	15	Cashier	234560	01/01/1993	13	3
+Mrs.	Elizabeth	Taylor	7 Merchiston	Glasgow	GH3 9AD	0000	0000013	0000	0000013	9876	5432109	00016	16	Head	23456	01/01/1993		4
+Mrs.	Helenda	Carter	8 Merchiston	Glasgow	GH3 9AD	0000	1000001	0000	1000001	0000	0000001	00017	17	Manager	234560	01/01/1993	16	4
+Mr.	Simon	Cowell	9 Merchiston	Glasgow	GH3 9AD	0000	0000014	0000	0000014	9876	5432109	00018	18	Cashier	23456	01/01/1993	17	4
+Mr.	Elton	John	20 Merchiston	Glasgow	GH3 9AD	0000	2000001	0000	0200001	0000	0000001	00019	19	Cashier	234560	01/01/1993	17	4
+																		
+currAccs																		
+accNum	balance	inRate	openDate	limitOfFreeOD	branch_r													
+0	1561	24	2008/11/12	100	0													
+1	1562	23	2008/11/12	200	0													
+2	1563	22	2008/11/12	300	0													
+3	1564	21	2008/11/12	400	0													
+4	1565	20	2008/11/12	500	1													
+5	1566	19	2008/11/12	600	1													
+6	1567	18	2008/11/12	700	1													
+7	1568	17	2008/11/12	800	1													
+8	1569	16	2008/11/12	900	2													
+9	15610	15	2008/11/12	1000	2													
+10	15611	14	2008/11/12	1100	2													
+11	15612	13	2008/11/12	1200	2													
+12	15613	12	2008/11/12	1300	3													
+13	15614	11	2008/11/12	1400	3													
+14	15615	10	2008/11/12	1500	3													
+15	15616	9	2008/11/12	1600	3													
+16	15617	8	2008/11/12	1700	4													
+17	15618	7	2008/11/12	1800	4													
+18	15619	6	2008/11/12	1900	4													
+19	15620	5	2008/11/12	2100	4													
+																		
+savAccs																		
+accNum	balance	inRate	openDate	branch_r														
+0	15620	1	2008/11/12	0														
+1	15619	11	2008/11/12	0														
+2	15618	12	2008/11/12	0														
+3	15617	13	2008/11/12	0														
+4	15616	14	2008/11/12	1														
+5	15615	15	2008/11/12	1														
+6	15614	16	2008/11/12	1														
+7	15613	17	2008/11/12	1														
+8	15612	18	2008/11/12	2														
+9	15611	19	2008/11/12	2														
+10	15610	0	2008/11/12	2														
+11	1569	172	2008/11/12	2														
+12	1568	171	2008/11/12	3														
+13	1567	173	2008/11/12	3														
+14	1566	174	2008/11/12	3														
+15	1565	175	2008/11/12	3														
+16	1564	176	2008/11/12	4														
+17	1563	177	2008/11/12	4														
+18	1562	178	2008/11/12	4														
+19	1561	179	2008/11/12	4														
+																		
+custSavAccs																		
+cust_r	acc_r																	
+0	0																	
+1	1																	
+2	2																	
+3	3																	
+4	4																	
+5	5																	
+6	6																	
+7	7																	
+8	8																	
+9	9																	
+10	10																	
+11	11																	
+12	12																	
+13	13																	
+14	14																	
+15	15																	
+16	16																	
+17	17																	
+18	18																	
+19	19																	
+0	0																	
+10	1																	
+2	2																	
+3	3																	
+4	4																	
+5	5																	
+6	6																	
+7	7																	
+8	8																	
+9	9																	
+																		
+custCurrAccs																		
+cust_r	acc_r																	
+0	0																	
+1	1																	
+2	2																	
+3	3																	
+4	4																	
+5	5																	
+6	6																	
+7	7																	
+8	8																	
+9	9																	
+10	10																	
+11	11																	
+12	12																	
+13	13																	
+14	14																	
+15	15																	
+16	16																	
+17	17																	
+18	18																	
+19	19																	
+0	0																	
+10	1																	
+2	2																	
+3	3																	
+4	4																	
+5	5																	
+6	6																	
+7	7																	
+8	8																	
+9	9																	
+																		
+																		
+																		
+																		
+																		
+																		
+																		
+																		
+																		
+																		
+																		
+																		
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+					 													
+																		
